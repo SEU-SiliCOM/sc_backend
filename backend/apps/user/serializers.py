@@ -113,6 +113,7 @@ class LoginSerializer(EmptySerializer):
         if not (user.check_password(password) or password == cache.get("login" + username)):
             self.set_context(response_code.INCORRECT_PASSWORD, "密码错误")
             raise ValidationError("密码错误")
+
         self.context["user"] = user
 
         return attrs
