@@ -13,7 +13,6 @@ def send_sms(phone, code, usage, *args):
         return result
     except Exception as e:
         log.error(f"{phone}短信发送失败:{str(e)}")
-        ...
 
 
 __all__ = [

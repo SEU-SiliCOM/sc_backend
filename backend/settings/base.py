@@ -1,5 +1,7 @@
 import os
 import sys
+import datetime
+
 from backend.privacy.keys import DJANGO_KEY, MYSQL_KEY
 
 SECRET_KEY = DJANGO_KEY
@@ -54,3 +56,31 @@ USE_TZ = False
 STATIC_URL = '/static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+AUTH_USER_MODEL = 'user.user'
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS''django_redis.client.DefaultClient'
+            'CONNECTION_POOL_KWARGS': {'max_connection': 100}
+        }
+    }
+}
+
+REST_FRAMEWORK = {
+    'EXCEPTION_HANDLER': 'backend.libs.common_exception_handler',
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+    ],
+}
+
+JWT_AUTH = {
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=7),
+}

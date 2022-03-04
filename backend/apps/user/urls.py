@@ -4,7 +4,9 @@ from rest_framework.routers import SimpleRouter
 from .views import *
 
 router = SimpleRouter()
-router.register("", SMSCodeView, "code")
+router.register("", RegisterView, "register")
+router.register("", LoginView, "login")
+router.register("", UserInfoView, "user_info")
 
 urlpatterns = [
     path("", include(router.urls))
