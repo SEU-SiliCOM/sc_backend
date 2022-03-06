@@ -54,7 +54,7 @@ class UserInfoView(ViewSet):
                 return InValidParamsResponse(ser)
 
             user = ser.save()
-            return UserInfoResponse(user, response_code.SUCCESS_POST_USER_INFO, "成功修改用户信息")
+            return UserInfoResponse(user, response_code.SUCCESS_POST_USER_INFO, "成功修改用户信息", True)
 
     @action(["POST"], False)
     def reset_password(self, request):

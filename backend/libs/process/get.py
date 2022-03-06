@@ -18,6 +18,7 @@ def getUserInfo(user: User):
         "date_joined": user.date_joined,
         "phone": user.phone,
         "icon": user.icon,
+        "description": user.description,
         "experience": user.experience,
         "metal": user.metal.filter(
             is_active=True,

@@ -306,6 +306,7 @@ class UnbindPhoneView(EmptySerializer):
 
 class UserInfoSerializer(EmptySerializer):
     username = serializers.CharField(required=False)
+    description = serializers.CharField(max_length=40, required=False)
 
     def validate_username(self, username):
         is_register = User.objects.filter(username=username).exists()
@@ -320,8 +321,11 @@ class UserInfoSerializer(EmptySerializer):
 
     def update(self, instance, validated_data):
         username = validated_data.get("username")
+        description = validated_data.get("description")
         if username:
             instance.username = username
+        if description:
+            instance.description = description
         instance.save()
 
         return instance
