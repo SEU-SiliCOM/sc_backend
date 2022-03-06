@@ -24,10 +24,10 @@ class CommonJwtAuthentication(BaseJSONWebTokenAuthentication):
         raise AuthenticationFailed("缺少签名")
 
 
-class SuperuserJwtAuthentication(CommonJwtAuthentication):
+class StaffJwtAuthentication(CommonJwtAuthentication):
     def authenticate(self, request):
         user, token = super().authenticate(request)
-        if not user.is_superuser:
+        if not user.is_staff:
             raise AuthenticationFailed("不是管理员账号")
 
         return user, token
@@ -35,5 +35,5 @@ class SuperuserJwtAuthentication(CommonJwtAuthentication):
 
 __all__ = [
     "CommonJwtAuthentication",
-    "SuperuserJwtAuthentication"
+    "StaffJwtAuthentication"
 ]
