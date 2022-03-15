@@ -2,13 +2,24 @@ from .base import *
 
 DEBUG = True
 
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': 'redis://127.0.0.1:6379',
+        'OPTIONS': {
+            'CLIENT_CLASS''django_redis.client.DefaultClient'
+            'CONNECTION_POOL_KWARGS': {'max_connection': 100}
+        }
+    }
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sc_db',
         'USER': 'root',
         'PASSWORD': MYSQL_KEY,
-        'HOST': '175.27.159.247'
+        'HOST': '1.13.159.138'
     }
 }
 
@@ -20,6 +31,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
+    "bbs",
     "common",
     "user"
 ]

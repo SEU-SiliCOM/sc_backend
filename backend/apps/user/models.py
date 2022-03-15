@@ -16,18 +16,14 @@ class User(AbstractUser):
     group = models.ManyToManyField(to="Group",
                                    through='UserToGroup',
                                    through_fields=('user_id', 'group_id'),
+                                   related_name="G"
                                    )
 
     permission = models.ManyToManyField(to="Permission",
                                         through='UserToPermission',
                                         through_fields=('user_id', 'permission_id'),
+                                        related_name="P"
                                         )
-
-    def __str__(self):
-        return self.username
-
-    class Meta:
-        ordering = ["id"]
 
 
 class Metal(models.Model):
@@ -67,6 +63,15 @@ class UserToGroup(models.Model):
 class GroupToPermission(models.Model):
     group_id = models.ForeignKey(to="Group", on_delete=models.DO_NOTHING)
     permission_id = models.ForeignKey(to="Permission", on_delete=models.DO_NOTHING)
+    is_active = models.BooleanField(default=True, verbose_name="是否有效")
+
+
+class Message(models.Model):
+    receiver_id = models.ForeignKey(to="User", on_delete=models.DO_NOTHING, verbose_name="接收者", related_name="to_id")
+    sender_id = models.ForeignKey(to="User", on_delete=models.DO_NOTHING, verbose_name="发送者", related_name="from_id")
+    content = models.TextField(verbose_name="内容")
+    comment_time = models.DateTimeField(auto_now_add=True, verbose_name="私信时间")
+    is_viewed = models.BooleanField(default=False, verbose_name="是否已读")
     is_active = models.BooleanField(default=True, verbose_name="是否有效")
 
 

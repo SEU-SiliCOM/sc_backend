@@ -1,8 +1,7 @@
-workers = 4
-threads = 2
-bind = '0.0.0.0:8809'
+threads = 9
+bind = '0.0.0.0:8000'
 daemon = 'false'
-worker_class = 'gevent'
+worker_class = 'uvicorn.workers.UvicornWorker'
 worker_connections = 2000
 pidfile = '/var/run/gunicorn.pid'
 accesslog = 'logs/acess.log'
